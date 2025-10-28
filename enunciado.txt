@@ -1,0 +1,101 @@
+💻 Diseño de Aplicaciones Web y Mobile 2025
+
+Trabajo Práctico: primer y segundo final 27 de octubre del 2025  Profesor: Mag. Ivan Ismael Ríos Villalba 
+
+
+
+Este trabajo involucra desarrollar una aplicación Flutter que muestre una lista de Pokémon obtenidos desde la PokeAPI, con capacidad de desplazamiento (scroll), búsqueda y visualización de detalles.
+
+Revisiones y entrega 
+
+
+El día del Primer Examen Final: Lunes 24/11/25 19:30 hs. 
+
+
+O el día del Segundo Examen Final: Miércoles 17/12/25 19:30 hs. 
+
+Observaciones 
+
+
+Tecnología: Flutter.
+
+Para la implementación puede utilizar el IDE de su elección (Visual Studio Code, Android Studio, etc.).
+
+Enunciado 
+
+Trabajo Práctico: "Mi Pokédex Interactiva" 
+
+Objetivo 
+
+Desarrollar una aplicación Flutter que muestre una lista de Pokémon obtenidos desde la PokeAPI, con capacidad de desplazamiento (scroll), búsqueda y visualización de detalles.
+
+Requisitos funcionales 
+
+1. Pantalla principal 
+
+Mostrar una lista de Pokémon con su número, nombre y sprite (imagen).
+
+Permitir desplazarse (scroll) por todos los Pokémon disponibles (hasta 1500).
+
+Mostrar un indicador de carga (CircularProgress Indicator) mientras se obtienen más Pokémon.
+
+2. Búsqueda 
+
+Incluir una barra de búsqueda en la parte superior para filtrar Pokémon por nombre (ej: "pikachu").
+
+Si no hay coincidencias, mostrar un mensaje "No se encontraron resultados".
+
+3. Pantalla de detalle 
+
+Al tocar un Pokémon, mostrar una nueva pantalla con:
+
+Imagen grande 
+
+Nombre y número 
+
+Tipo(s) 
+
+Altura y peso 
+
+Los datos se obtienen de la ruta individual de cada Pokémon (https://pokeapi.co/api/v2/pokemon/{id}).
+
+4. Diseño 
+
+Usar ListView o GridView con scroll.
+
+Utilizar colores de fondo suaves y tarjetas (Card) para cada Pokémon.
+
+Implementar íconos o tipografía agradable (por ejemplo, GoogleFonts.pressStart2P).
+
+Desafíos opcionales (bonus) 
+
+Implementar un modo oscuro / claro.
+
+Guardar Pokémon "favoritos" con SharedPreferences.
+
+Usar GridView.builder para mostrar los Pokémon en formato de cuadrícula.
+
+Animar la transición entre pantallas con Hero.
+
+Aprendizajes esperados 
+
+Uso de APIs REST con http.
+
+Control del estado y del scroll.
+
+Construcción de interfaces reactivas y adaptativas.
+
+Buenas prácticas de estructuración del código Flutter.
+
+Entrega 
+
+
+Código fuente en un repositorio de GitHub o archivo .zip.
+
+Un breve documento o README que describa:
+
+Qué funcionalidades implementaron.
+
+Qué desafíos encontraron.
+
+Qué aprendieron del proyecto.

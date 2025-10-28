@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../models/pokemon.dart';
 
 class PokemonDetailScreen extends StatelessWidget {
@@ -21,10 +22,35 @@ class PokemonDetailScreen extends StatelessWidget {
               color: Colors.grey[200],
               child: Hero(
                 tag: 'pokemon-${pokemon.id}',
-                child: Image.network(
-                  pokemon.imageUrl,
+                child: CachedNetworkImage(
+                  imageUrl: pokemon.imageUrl,
                   height: 250,
                   fit: BoxFit.contain,
+                  fadeInDuration: const Duration(milliseconds: 300),
+                  fadeOutDuration: const Duration(milliseconds: 300),
+                  memCacheHeight: 500,
+                  maxWidthDiskCache: 1000,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.catching_pokemon,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Error loading image',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

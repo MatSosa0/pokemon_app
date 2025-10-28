@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import '../models/pokemon.dart';
 
@@ -18,38 +17,67 @@ class PokemonService {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       final List<dynamic> results = data['results'];
-      List<Future<Pokemon>> pokemonFutures = results.map((result) async {
-        final detailUrl = result['url'] as String;
-        final detailResponse = await http.get(Uri.parse(detailUrl));
-        
-        if (detailResponse.statusCode == 200) {
-          final pokemonData = jsonDecode(detailResponse.body);
-          return Pokemon.fromJson(pokemonData);
-        } else {
-          throw Exception('Failed to load pokemon details');
-        }
-      }).toList();
+      final List<Pokemon> pokemons = [];
 
-      return await Future.wait(pokemonFutures);
+      for (var result in results) {
+        try {
+          // Add a delay between requests to avoid rate limiting
+          await Future.delayed(const Duration(milliseconds: 500));
+          
+          final detailUrl = result['url'] as String;
+          final detailResponse = await http.get(Uri.parse(detailUrl));
+          
+          if (detailResponse.statusCode == 200) {
+            final pokemonData = jsonDecode(detailResponse.body);
+            pokemons.add(Pokemon.fromJson(pokemonData));
+          }
+        } catch (e) {
+          print('Error loading pokemon details: $e');
+        }
+      }
+
+      return pokemons;
     } else {
       throw Exception('Failed to load pokemon list');
     }
   }
 
-  Future<Pokemon?> searchPokemon(String name) async {
+  Future<List<Pokemon>> searchPokemon(String query) async {
+    if (query.isEmpty) return [];
+
     try {
       final response = await http.get(
-        Uri.parse('$_baseUrl/pokemon/${name.toLowerCase()}'),
+        Uri.parse('$_baseUrl/pokemon?limit=1000'),
       );
       
       if (response.statusCode == 200) {
-        final pokemonData = json.decode(response.body) as Map<String, dynamic>;
-        return Pokemon.fromJson(pokemonData);
+        final data = jsonDecode(response.body);
+        final List<dynamic> results = data['results'];
+        
+        final filteredResults = results
+            .where((pokemon) => pokemon['name'].toString().toLowerCase().contains(query.toLowerCase()))
+            .take(5)
+            .toList();
+
+        final List<Pokemon> pokemons = [];
+        for (var result in filteredResults) {
+          try {
+            final detailResponse = await http.get(Uri.parse(result['url']));
+            if (detailResponse.statusCode == 200) {
+              pokemons.add(Pokemon.fromJson(jsonDecode(detailResponse.body)));
+            }
+          } catch (e) {
+            print('Error loading pokemon details: $e');
+          }
+          // Add a delay between requests to avoid rate limiting
+          await Future.delayed(const Duration(milliseconds: 500));
+        }
+        return pokemons;
       }
     } catch (e) {
-      return null;
+      print('Error searching pokemon: $e');
     }
-    return null;
+    return [];
   }
 
   Future<Pokemon?> getPokemonById(int id) async {
