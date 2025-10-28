@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = context.watch<ThemeProvider>();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Pokemon App",
       theme: themeProvider.currentTheme.copyWith(
         textTheme: TextTheme(
