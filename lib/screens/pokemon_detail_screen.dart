@@ -185,7 +185,10 @@ class PokemonDetailScreen extends StatelessWidget {
               children: [
                 Text(
                   statNames[stat.key] ?? stat.key,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 52, 52, 52),
+                  ),
                 ),
                 Text(
                   stat.value.toString(),

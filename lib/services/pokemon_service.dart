@@ -5,13 +5,14 @@ import '../models/pokemon.dart';
 class PokemonService {
   static const String _baseUrl = 'https://pokeapi.co/api/v2';
   static const int _batchSize = 50; // Tamaño del lote más pequeño
+  static const int _maxPokemon = 151; // Limitar a los primeros 151 Pokémon
   
   List<Map<String, dynamic>>? _pokemonListCache;
   Map<String, Pokemon> _pokemonDetailsCache = {};
   int _totalPokemon = 0;
   Future<List<Pokemon>> getPokemonList({int limit = 20, int offset = 0}) async {
     try {
-      // Si no tenemos el caché inicial, obtenemos el total de Pokémon primero
+      // Si no tenemos el caché inicial, obtenemos los primeros 151 Pokémon
       if (_pokemonListCache == null) {
         final countResponse = await http.get(
           Uri.parse('$_baseUrl/pokemon?limit=1'),
@@ -26,12 +27,16 @@ class PokemonService {
         _pokemonListCache = [];
       }
 
-      // Verificamos si necesitamos cargar más Pokémon
-      if (_pokemonListCache!.length < offset + limit) {
+      // Verificamos si necesitamos cargar más Pokémon (limitado a 151)
+      if (_pokemonListCache!.length < offset + limit && _pokemonListCache!.length < _maxPokemon) {
         // Calculamos el siguiente lote a cargar
         final nextBatchOffset = _pokemonListCache!.length;
+        final batchLimit = (_pokemonListCache!.length + _batchSize > _maxPokemon) 
+            ? _maxPokemon - _pokemonListCache!.length 
+            : _batchSize;
+        
         final response = await http.get(
-          Uri.parse('$_baseUrl/pokemon?limit=$_batchSize&offset=$nextBatchOffset'),
+          Uri.parse('$_baseUrl/pokemon?limit=$batchLimit&offset=$nextBatchOffset'),
         );
 
         if (response.statusCode == 200) {
@@ -82,10 +87,10 @@ class PokemonService {
     if (query.isEmpty) return [];
 
     try {
-      // Load and cache the full list only once
+      // Load and cache the first 151 Pokémon only once
       if (_pokemonListCache == null) {
         final response = await http.get(
-          Uri.parse('$_baseUrl/pokemon?limit=1000'),
+          Uri.parse('$_baseUrl/pokemon?limit=$_maxPokemon'),
         );
         
         if (response.statusCode == 200) {
