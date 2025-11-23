@@ -111,6 +111,7 @@ class PokemonDetailScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: Colors.grey,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -133,7 +134,7 @@ class PokemonDetailScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: const Color.fromARGB(255, 65, 64, 64),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -187,7 +188,7 @@ class PokemonDetailScreen extends StatelessWidget {
                   statNames[stat.key] ?? stat.key,
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 52, 52, 52),
+                    color: Colors.grey,
                   ),
                 ),
                 Text(
