@@ -10,7 +10,7 @@ class PokemonService {
   List<Map<String, dynamic>>? _pokemonListCache;
   Map<String, Pokemon> _pokemonDetailsCache = {};
   int _totalPokemon = 0;
-  Future<List<Pokemon>> getPokemonList({int limit = 20, int offset = 0}) async {
+  Future<List<Pokemon>> getPokemonList({int limit = 151, int offset = 0}) async {
     try {
       // Si no tenemos el caché inicial, obtenemos los primeros 151 Pokémon
       if (_pokemonListCache == null) {

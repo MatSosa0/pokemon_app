@@ -344,7 +344,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                     ? GridView.builder(
                         padding: const EdgeInsets.all(8),
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
+                          crossAxisCount: 2,
                           childAspectRatio: 0.75,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
@@ -372,7 +372,7 @@ class _PokemonListScreenState extends State<PokemonListScreen> {
                             child: GridView.builder(
                               padding: const EdgeInsets.all(8),
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
+                                crossAxisCount: 2,
                                 childAspectRatio: 0.75,
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10,

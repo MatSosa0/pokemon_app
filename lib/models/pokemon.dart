@@ -24,7 +24,7 @@ class Pokemon {
       return Pokemon(
         id: id,
         name: json['name'],
-        imageUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png',
+        imageUrl: 'https://pokeapi.co/media/sprites/pokemon/other/official-artwork/$id.png',
         types: const [], // Types will be filled when getting detailed info
       );
     } else {
@@ -37,7 +37,8 @@ class Pokemon {
       return Pokemon(
         id: json['id'],
         name: json['name'],
-        imageUrl: json['sprites']['other']['official-artwork']['front_default'],
+        imageUrl: json['sprites']['other']['official-artwork']['front_default'] ?? 
+                  'https://pokeapi.co/media/sprites/pokemon/other/official-artwork/${json['id']}.png',
         types: (json['types'] as List)
             .map((type) => type['type']['name'] as String)
             .toList(),
