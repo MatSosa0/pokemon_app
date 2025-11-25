@@ -1,7 +1,7 @@
 #Integrantes del Proyecto:
-Matias Meza
-Elias Zaracho
-Oscar Gonzalez
+-Matias Meza
+-Elias Zaracho
+-Oscar Gonzalez
 
 # pokemon_app
 
