@@ -1,3 +1,8 @@
+#Integrantes del Proyecto:
+Matias Meza
+Elias Zaracho
+Oscar Gonzalez
+
 # pokemon_app
 
 A new Flutter project.
