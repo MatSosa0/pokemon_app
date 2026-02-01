@@ -8,6 +8,7 @@ import 'services/pokemon_service.dart';
 import 'services/favorites_service.dart';
 import 'models/pokemon.dart';
 import 'screens/pokemon_detail_screen.dart';
+import 'screens/favorites_screen.dart';
 import 'providers/theme_provider.dart';
 
 void main() async {
@@ -43,7 +44,48 @@ class MyApp extends StatelessWidget {
           titleLarge: GoogleFonts.pressStart2p(),
         ),
       ),
-      home: const PokemonListScreen(),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final pages = [
+      const PokemonListScreen(),
+      const FavoritesScreen(),
+    ];
+
+    return Scaffold(
+      body: pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'All Pokemon',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorites',
+          ),
+        ],
+      ),
     );
   }
 }

@@ -18,41 +18,23 @@ class PokemonDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Animated GIF Display
             Container(
               color: Colors.grey[200],
-              child: Hero(
-                tag: 'pokemon-${pokemon.id}',
-                child: CachedNetworkImage(
-                  imageUrl: pokemon.imageUrl,
-                  height: 250,
-                  fit: BoxFit.contain,
-                  fadeInDuration: const Duration(milliseconds: 300),
-                  fadeOutDuration: const Duration(milliseconds: 300),
-                  memCacheHeight: 500,
-                  maxWidthDiskCache: 1000,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.catching_pokemon,
-                        size: 50,
-                        color: Colors.grey,
+              height: 400,
+              child: pokemon.animatedGifUrl != null && pokemon.animatedGifUrl!.isNotEmpty
+                  ? CachedNetworkImage(
+                      imageUrl: pokemon.animatedGifUrl!,
+                      fit: BoxFit.contain,
+                      memCacheHeight: 800,
+                      maxWidthDiskCache: 800,
+                      placeholder: (context, url) => const Center(
+                        child: CircularProgressIndicator(),
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Error loading image',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                      errorWidget: (context, url, error) => _buildImageError(),
+                      filterQuality: FilterQuality.high,
+                    )
+                  : _buildImageError(),
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -123,6 +105,27 @@ class PokemonDetailScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildImageError() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(
+          Icons.catching_pokemon,
+          size: 50,
+          color: Colors.grey,
+        ),
+        const SizedBox(height: 8),
+        Text(
+          'Gif not available',
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: 12,
+          ),
+        ),
+      ],
     );
   }
 
